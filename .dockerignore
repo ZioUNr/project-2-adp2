@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.production.example
+node_modules
+data
+public/uploads/*
+!public/uploads/.gitkeep
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+npm-debug.log*
+README.md
+test

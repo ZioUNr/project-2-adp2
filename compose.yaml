@@ -1,0 +1,63 @@
+name: ainazik
+
+services:
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATA_DIR: /data
+      UPLOAD_DIR: /data/uploads
+      TRUST_PROXY: "1"
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+    expose:
+      - "3000"
+    volumes:
+      - ainazik-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - internal
+    security_opt:
+      - no-new-privileges:true
+    init: true
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - internal
+    security_opt:
+      - no-new-privileges:true
+    init: true
+
+networks:
+  internal:
+
+volumes:
+  ainazik-data:
+  caddy-data:
+  caddy-config:

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f5f0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Панель управления — AINAZIK</title>
+    <link rel="icon" href="/assets/logo-ainazik.png">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/site.js" defer></script>
+    <script src="/js/admin.js" defer></script>
+</head>
+<body class="dashboard-page">
+    <header class="admin-header">
+        <a class="admin-brand" href="/"><img src="/assets/logo-ainazik.png" alt="AINAZIK"></a>
+        <div class="admin-header-right"><span id="admin-email"></span><button class="admin-button admin-button-quiet" id="logout-button" type="button">Выйти</button></div>
+    </header>
+    <main class="admin-main">
+        <div class="admin-welcome"><div><p class="eyebrow">Рабочее пространство</p><h1>Панель <em>управления</em></h1></div><a class="return-link" href="/">Открыть сайт ↗</a></div>
+        <nav class="admin-tabs" aria-label="Разделы панели">
+            <button type="button" class="admin-tab is-active" data-tab="products">Коллекция</button>
+            <button type="button" class="admin-tab" data-tab="news">Новости</button>
+            <button type="button" class="admin-tab" data-tab="pages">Тексты страниц</button>
+            <button type="button" class="admin-tab" data-tab="settings">Контакты и адрес</button>
+        </nav>
+        <p class="admin-message" id="admin-message" role="status" hidden></p>
+
+        <section class="admin-section is-active" id="tab-products">
+            <div class="admin-section-heading"><div><p class="eyebrow">Каталог платьев</p><h2>Коллекция</h2></div><button class="admin-button admin-button-primary" id="add-product-button" type="button">+ Добавить платье</button></div>
+            <div class="admin-workspace">
+                <div class="admin-record-list" id="product-list" aria-live="polite"><p class="loading-note">Загружаем платья…</p></div>
+                <form class="editor-card" id="product-form">
+                    <div class="editor-heading"><div><p class="eyebrow" id="product-form-eyebrow">Новая модель</p><h3 id="product-form-title">Добавить в коллекцию</h3></div><button class="icon-button" id="cancel-product-edit" type="button" aria-label="Очистить форму">×</button></div>
+                    <input type="hidden" name="id">
+                    <label for="product-name">Название</label><input id="product-name" name="name" maxlength="120" required>
+                    <div class="form-row">
+                        <div><label for="product-category">Категория</label><select id="product-category" name="category" required><option value="bridal">Свадебное платье</option><option value="modest">Закрытый крой</option><option value="evening">Вечерний образ</option><option value="accessories">Аксессуар</option></select></div>
+                        <div><label for="product-price">Цена (сом)</label><input id="product-price" name="price" type="number" min="0" step="1" placeholder="По запросу"></div>
+                    </div>
+                    <label for="product-image">Фотография · JPG, PNG или WebP, до 8 МБ</label>
+                    <div class="image-upload-row"><input id="product-image" name="image" type="text" placeholder="Ссылка на фотографию или загрузите файл" required><label class="upload-button" for="product-image-file">Выбрать файл</label><input class="visually-hidden" id="product-image-file" type="file" accept="image/jpeg,image/png,image/webp"></div>
+                    <img class="image-preview" id="product-image-preview" alt="Предпросмотр изображения" hidden>
+                    <label for="product-description">Описание</label><textarea id="product-description" name="description" rows="4" maxlength="4000" placeholder="Фасон, настроение, детали…"></textarea>
+                    <div class="form-row">
+                        <div><label for="product-sizes">Размеры</label><input id="product-sizes" name="sizes" maxlength="120" placeholder="Например, 42–48"></div>
+                        <div><label for="product-fabric">Ткань</label><input id="product-fabric" name="fabric" maxlength="160" placeholder="Например, атлас"></div>
+                    </div>
+                    <div class="checkbox-row"><label><input name="isNew" type="checkbox"> Новинка</label><label><input name="published" type="checkbox" checked> Показывать на сайте</label></div>
+                    <button class="admin-button admin-button-primary admin-submit" type="submit">Сохранить платье</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-section" id="tab-news" hidden>
+            <div class="admin-section-heading"><div><p class="eyebrow">Публикации салона</p><h2>Новости</h2></div><button class="admin-button admin-button-primary" id="add-news-button" type="button">+ Добавить новость</button></div>
+            <div class="admin-workspace">
+                <div class="admin-record-list" id="news-list" aria-live="polite"><p class="loading-note">Загружаем новости…</p></div>
+                <form class="editor-card" id="news-form">
+                    <div class="editor-heading"><div><p class="eyebrow" id="news-form-eyebrow">Новая публикация</p><h3 id="news-form-title">Добавить новость</h3></div><button class="icon-button" id="cancel-news-edit" type="button" aria-label="Очистить форму">×</button></div>
+                    <input type="hidden" name="id">
+                    <label for="news-title">Заголовок</label><input id="news-title" name="title" maxlength="160" required>
+                    <label for="news-excerpt">Короткий анонс</label><textarea id="news-excerpt" name="excerpt" rows="2" maxlength="320" required></textarea>
+                    <label for="news-body">Текст публикации</label><textarea id="news-body" name="body" rows="7" maxlength="8000" required></textarea>
+                    <label for="news-image">Фотография · необязательно</label>
+                    <div class="image-upload-row"><input id="news-image" name="image" type="text" placeholder="Ссылка на фотографию или загрузите файл"><label class="upload-button" for="news-image-file">Выбрать файл</label><input class="visually-hidden" id="news-image-file" type="file" accept="image/jpeg,image/png,image/webp"></div>
+                    <img class="image-preview" id="news-image-preview" alt="Предпросмотр изображения" hidden>
+                    <div class="checkbox-row"><label><input name="published" type="checkbox" checked> Опубликовать на сайте</label></div>
+                    <button class="admin-button admin-button-primary admin-submit" type="submit">Сохранить публикацию</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-section" id="tab-pages" hidden>
+            <div class="admin-section-heading"><div><p class="eyebrow">Редактируемое содержимое</p><h2>Тексты страниц</h2></div><button class="admin-button admin-button-primary" id="add-page-section-button" type="button">+ Добавить текстовый блок</button></div>
+            <p class="page-content-intro">Добавляйте заголовки и описания на главную страницу, в каталог, новости, раздел «О салоне» и контакты. Блоки можно скрыть, изменить страницу или задать порядок показа.</p>
+            <div class="page-section-filter-row"><label for="page-section-filter">Показывать блоки страницы</label><select id="page-section-filter"><option value="home">Главная</option><option value="catalog">Коллекция</option><option value="about">О салоне</option><option value="news">Новости</option><option value="contacts">Контакты</option></select></div>
+            <div class="admin-workspace">
+                <div class="admin-record-list" id="page-section-list" aria-live="polite"><p class="loading-note">Загружаем текстовые блоки…</p></div>
+                <form class="editor-card" id="page-section-form">
+                    <div class="editor-heading"><div><p class="eyebrow" id="page-section-form-eyebrow">Новый текстовый блок</p><h3 id="page-section-form-title">Добавить на страницу</h3></div><button class="icon-button" id="cancel-page-section-edit" type="button" aria-label="Очистить форму">×</button></div>
+                    <input type="hidden" name="id">
+                    <label for="page-section-page">Страница</label>
+                    <select id="page-section-page" name="pageKey" required>
+                        <option value="home">Главная</option>
+                        <option value="catalog">Коллекция</option>
+                        <option value="about">О салоне</option>
+                        <option value="news">Новости</option>
+                        <option value="contacts">Контакты</option>
+                    </select>
+                    <label for="page-section-title">Заголовок блока · необязательно</label>
+                    <input id="page-section-title" name="title" maxlength="160" placeholder="Например, Индивидуальный пошив">
+                    <label for="page-section-body">Текст и описание</label>
+                    <textarea id="page-section-body" name="body" rows="7" maxlength="8000" placeholder="Введите текст, который появится на выбранной странице…" required></textarea>
+                    <div class="form-row">
+                        <div><label for="page-section-order">Порядок показа</label><input id="page-section-order" name="sortOrder" type="number" min="-10000" max="10000" step="1" value="0"></div>
+                    </div>
+                    <p class="field-help">Меньшее число показывается выше. Блоки с одинаковым номером идут по дате добавления.</p>
+                    <div class="checkbox-row"><label><input name="published" type="checkbox" checked> Показывать на сайте</label></div>
+                    <button class="admin-button admin-button-primary admin-submit" type="submit">Сохранить текстовый блок</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-section" id="tab-settings" hidden>
+            <div class="admin-section-heading"><div><p class="eyebrow">Информация для гостей</p><h2>Контакты и адрес</h2></div></div>
+            <form class="editor-card settings-form" id="settings-form">
+                <label for="settings-city">Город</label><input id="settings-city" name="city" maxlength="100" placeholder="Например, Бишкек">
+                <label for="settings-address">Адрес салона</label><input id="settings-address" name="address" maxlength="200" placeholder="Улица, дом, ориентир">
+                <label for="settings-phone">Телефон</label><input id="settings-phone" name="phone" type="tel" maxlength="40" placeholder="+996 …">
+                <label for="settings-whatsapp">WhatsApp · номер в международном формате</label><input id="settings-whatsapp" name="whatsapp" maxlength="80" placeholder="+996 …">
+                <label for="settings-instagram">Instagram · полная ссылка</label><input id="settings-instagram" name="instagram" type="url" maxlength="2048" placeholder="https://instagram.com/…">
+                <label for="settings-hours">Часы работы</label><input id="settings-hours" name="hours" maxlength="160" placeholder="Например, ежедневно с 10:00 до 19:00">
+                <button class="admin-button admin-button-primary admin-submit" type="submit">Сохранить контакты</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
