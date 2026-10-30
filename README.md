@@ -81,6 +81,7 @@ Remove-Item Env:\ADMIN_PASSWORD
 4. Отправьте актуальный код в свой GitHub-репозиторий. На [Render](https://dashboard.render.com/) создайте **Blueprint** из этого репозитория и подтвердите создание сервиса из `render.yaml`.
 5. При настройке задайте:
    - `DATABASE_URL` — Session pooler connection string Supabase;
+   - `DATABASE_SSL_CA` — корневой SSL-сертификат Supabase из **Project Settings → Database → SSL Configuration → Download Certificate**, если соединение завершается ошибкой проверки сертификата; вставьте содержимое PEM целиком только в переменную Render;
    - `SUPABASE_URL` — Project URL;
    - `SUPABASE_SERVICE_ROLE_KEY` — service-role secret key;
    - `BOOTSTRAP_ADMIN_EMAIL` и `BOOTSTRAP_ADMIN_PASSWORD` — личную почту и временный пароль длиной не менее 12 символов, чтобы создать администратора при первой успешной загрузке приложения.

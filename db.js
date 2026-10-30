@@ -127,9 +127,19 @@ const postgresSchema = `
 
 function createPostgresDatabase() {
     const { Pool } = require("pg");
+    const databaseUrl = new URL(process.env.DATABASE_URL);
+    for (const parameter of ["sslmode", "sslrootcert", "sslcert", "sslkey", "sslnegotiation", "uselibpqcompat"]) {
+        databaseUrl.searchParams.delete(parameter);
+    }
+
+    const databaseCa = process.env.DATABASE_SSL_CA?.trim();
+    const ssl = {
+        rejectUnauthorized: true,
+        ...(databaseCa ? { ca: databaseCa } : {})
+    };
     const pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: true },
+        connectionString: databaseUrl.toString(),
+        ssl,
         max: Number(process.env.DB_POOL_SIZE || 5),
         connectionTimeoutMillis: 10000,
         idleTimeoutMillis: 20000,
