@@ -152,7 +152,7 @@
         brand.href = "/";
         brand.setAttribute("aria-label", "AINAZIK — главная");
         const logo = document.createElement("img");
-        logo.src = "/assets/logo-ainazik.png";
+        logo.src = "/assets/logo-ainazik-display.png";
         logo.alt = "AINAZIK";
         brand.append(logo);
         main.append(brand);
